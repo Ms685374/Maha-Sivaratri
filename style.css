@@ -1,0 +1,127 @@
+/* Music Section */
+#music {
+    background: linear-gradient(135deg, rgba(58, 35, 78, 0.8), rgba(26, 11, 41, 0.8));
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.music-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.music-player {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.music-text {
+    font-size: 1.1rem;
+    color: var(--light);
+}
+/* Shlokas Section */
+#shlokas {
+    background: var(--dark);
+    padding: 80px 20px;
+}
+
+.shlokas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.shloka-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.shloka-text {
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.shloka-translation {
+    font-size: 1.1rem;
+    color: var(--light);
+}
+/* Dedication Section */
+#dedication {
+    background: linear-gradient(135deg, rgba(58, 35, 78, 0.8), rgba(26, 11, 41, 0.8));
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.dedication-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dedication-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--light);
+}
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    transform: translateY(100%);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+/* Countdown Section */
+#countdown {
+    background: var(--dark);
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.countdown-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.countdown-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.countdown-item span {
+    display: block;
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.countdown-label {
+    font-size: 1rem;
+    color: var(--light);
+}

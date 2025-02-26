@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maha Shivaratri</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        :root {
+            --primary: #3a234e;
+            --secondary: #7b4e9d;
+            --accent: #ffa500;
+            --light: #f5f0ff;
+            --dark: #1a0b29;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        /* Particle effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Header */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(26, 11, 41, 0.7), rgba(26, 11, 41, 0.9)), url('/api/placeholder/1920/1080') center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .om-symbol {
+            font-size: 10rem;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        
+        .header-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffa500, #ff4500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .header-subtitle {
+            font-size: 1.5rem;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            opacity: 0;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            z-index: 100;
+            transition: background 0.3s ease;
+        }
+        
+        nav.scrolled {
+            background-color: rgba(26, 11, 41, 0.9);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .nav-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+        }
+        
+        /* Story Section */
+        .story-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .story-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: linear-gradient(135deg, rgba(58, 35, 78, 0.8), rgba(26, 11, 41, 0.8));
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        
+        .story-card.animated {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .story-title {
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+        
+        .story-text {
+            line-height: 1.7;
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item.animated {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        
+        .modal-content img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 5px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
+        
+        /* Traditions Section */
+        .traditions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .tradition-card {
+            background: linear-gradient(135deg, rgba(58, 35, 78, 0.8), rgba(26, 11, 41, 0.8));
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        
+        .tradition-card.animated {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .tradition-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .tradition-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .tradition-text {
+            line-height: 1.6;
+        }
+        
+        /* Message Section */
+        .message-container {
+            background: linear-gradient(135deg, rgba(58, 35, 78, 0.8), rgba(26, 11, 41, 0.8));
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        
+        .message-container.animated {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .message-title {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .message-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .heart {
+            color: #ff4d6d;
+            font-size: 1.5rem;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-link {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 2.5rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 250px;
+                height: 100vh;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 80px 20px 20px;
+                transition: right 0.3s ease;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-toggle {
+                display: block;
+                z-index: 101;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .story-title {
+                font-size: 1.5rem;
+            }
+            
+            .message-title {
+                font-size: 1.8rem;
+            }
+            
+            .message-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles -->
+    <div class="particles"></div>
+    
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-logo">शिवरात्रि</div>
+        <div class="nav-links" id="navLinks">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#story" class="nav-link">Story</a>
+            <a href="#gallery" class="nav-link">Gallery</a>
+            <a href="#traditions" class="nav-link">Traditions</a>
+            <a href="#message" class="nav-link">Message</a>
+        </div>
+        <div class="nav-toggle" id="navToggle">☰</div>
+    </nav>
+    
+    <!-- Header -->
+    <header id="about">
+        <div class="om-symbol">ॐ</div>
+        <h1 class="header-title">✨ Happy Maha Shivaratri, My Parvati ✨</h1>
+        <p class="header-subtitle">On this divine night of Lord Shiva, I wanted to create something just for you—something that reflects not just the sacred energy of Shivaratri but also what you mean to me.</p>
+        <div class="scroll-down" id="scrollDown">▼ Scroll Down</div>
+    </header>
+    
+    <!-- Story Section -->
+    <section id="story">
+        <h2 class="section-title">The Story of our Shivaratri</h2>
+        <div class="story-container">
+            <div class="story-card">
+                <h3 class="story-title">The Great Night of Shiva</h3>
+                <p class="story-text">Maha Shivaratri, the 'Great Night of Shiva,' is celebrated on the 14th night of the new moon during Krishna Paksha in the month of Phalgun. This sacred night commemorates the marriage of Lord Shiva and Goddess Parvati, symbolizing the union of consciousness (Shiva) and energy (Shakti).</p>
+            </div>
+            
+            <div class="story-card">
+                <h3 class="story-title">The Light That Guides Me</h3>
+                <p class="story-text">Just as Shiva appeared as an infinite pillar of light, guiding Vishnu and Brahma, you are that light in my life. When everything feels uncertain, you are my constant. You remind me that love is not about proving who is greater but about surrendering to something greater than ourselves</p>
+            </div>
+            
+            <div class="story-card">
+                <h3 class="story-title">The Strength in My Heart</h3>
+                <p class="story-text">Like Shiva drinking the poison to save the universe, you have a strength that amazes me. You hold your struggles within, smiling as if nothing ever hurts. But I see you. I see the depth of your heart, the fire in your soul, and the love that flows effortlessly from you. You make me want to be better, to love better.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <h2 class="section-title">Sacred Gallery</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://i.imgur.com/73SVoKy.jpeg" alt="Lord Shiva Meditation">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">Divine Meditation</h3>
+                    <p>Lord Shiva in deep meditation at Mount Kailash</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="https://i.imgur.com/RaUYn9s.jpeg"alt="Shiva and Parvati">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">Divine Union</h3>
+                    <p>The sacred marriage of Shiva and Parvati</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="https://i.imgur.com/TID281g.jpeg"alt="Trishul and Damru">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">Sacred Symbols</h3>
+                    <p>The trishul and damru, powerful symbols of Lord Shiva</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="https://i.imgur.com/mrqo4sY.jpeg" alt="Shiva Tandav">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">Cosmic Dance</h3>
+                    <p>Tandav, the celestial dance of creation and destruction</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="https://i.imgur.com/DUrRQe2.jpeg" alt="Rudraksha">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">Rudraksha</h3>
+                    <p>Sacred beads representing the tears of Lord Shiva</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="https://i.imgur.com/w22IEPG.jpeg" alt="Shiva Lingam">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">Shiva Lingam</h3>
+                    <p>The aniconic representation of the divine</p>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+     <!-- Modal for Gallery -->
+    <div class="modal" id="imageModal">
+        <span class="modal-close" id="modalClose">×</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Gallery Image">
+        </div>
+    </div>
+    <!-- Traditions Section -->
+    <section id="traditions">
+        <h2 class="section-title">Sacred Traditions</h2>
+        <div class="traditions-container">
+            <div class="tradition-card">
+                <div class="tradition-icon">🕯️</div>
+                <h3 class="tradition-title">🌙 Fasting, Like I Fast for You</h3>
+                <p class="tradition-text">They say devotees fast on this night to purify themselves. If my heart could fast, it would fast for you, emptying out everything except love.
+</p>
+            </div>
+            
+            <div class="tradition-card">
+                <div class="tradition-icon">🪔</div>
+                <h3 class="tradition-title">🌿 Night Vigil, Like the Nights I Stay Awake Thinking of You</h3>
+                <p class="tradition-text">Devotees stay up all night in worship. I stay up, lost in the thought of you, in the sound of your laughter, in the way your presence feels like home.</p>
+            </div>
+            
+            <div class="tradition-card">
+                <div class="tradition-icon">🙏</div>
+                <h3 class="tradition-title">🔥 Abhishekam, Like How My Heart Pours for You</h3>
+                <p class="tradition-text">Shiva is worshiped with milk, honey, and devotion. My love for you is like that—pure, deep, and never-ending.</p>
+            </div>
+            
+            <div class="tradition-card">
+                <div class="tradition-icon">✨</div>
+                <h3 class="tradition-title">🌸 Bilva Leaves, Like the Little Things That Matter</h3>
+                <p class="tradition-text">Just as Shiva loves Bilva leaves, I love the tiny moments with you—the way you talk, the way your eyes sparkle, the way you just exist so beautifully.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Personal Message Section -->
+    <section id="message">
+        <h2 class="section-title">A Message for My Parvati, My Shakti</h2>
+        <div class="message-container">
+            <h3 class="message-title">My Zubi,</h3>
+            <p class="message-text">
+                Like the eternal love between Shiva and Parvati, my feelings for you transcend time and space. They say that when Shiva and Shakti unite, the whole universe finds balance. That’s what you are to me—you are my balance, my peace, my chaos, my everything.
+                <br><br>
+               On this night, when the world prays for love, strength, and clarity, I pray for only one thing—to always have you beside me, just like Parvati stood beside Shiva, unwavering, undying.
+Like Parvati meditated for years to be with Shiva, I will always choose you—again and again, in every lifetime.
+May Lord Shiva bless you with all the happiness in the world. May your heart always be as kind, your soul as fierce, and your dreams as limitless as the universe itself.
+
+                <br><br>
+                Thank you for being the Shakti to my Shiva, the energy that completes me and gives purpose to my existence.You are not just my love.
+You are my Shakti—the force that makes my world move.
+You are my Parvati—my eternal companion, my divine blessing.
+                <br><br>
+                With all my love,devotion forever and beyond, ♥ <span class="heart">♥</span>
+            </p>
+        </div>
+    </section>
+    
+    <script>
+        // Create particles
+        function createParticles() {
+            const particles = document.querySelector('.particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                
+                // Random animation duration
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                const delay = Math.random() * 5;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particles.appendChild(particle);
+            }
+        }
+        
+        // Animate on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.story-card, .gallery-item, .tradition-card, .message-container');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+        
+        // Header animations
+        function animateHeader() {
+            gsap.to('.om-symbol', { opacity: 1, scale: 1, duration: 1.5, ease: 'elastic.out(1, 0.5)' });
+            gsap.to('.header-title', { opacity: 1, y: 0, duration: 1, delay: 0.5 });
+            gsap.to('.header-subtitle', { opacity: 1, y: 0, duration: 1, delay: 0.8 });
+            gsap.to('.scroll-down', { opacity: 1, duration: 1, delay: 1.2 });
+        }
+        
+        // Navbar scroll effect
+        function navbarScroll() {
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+        
+        // Mobile navigation
+        function mobileNav() {
+            const navToggle = document.getElementById('navToggle');
+            const navLinks = document.getElementById('navLinks');
+            const links = document.querySelectorAll('.nav-link');
+            
+            navToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                
+                // Change hamburger to X
+                if (navLinks.classList.contains('active')) {
+                    navToggle.innerHTML = '✕';
+                } else {
+                    navToggle.innerHTML = '☰';
+                }
+            });
+            
+            // Close menu when link is clicked
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    navToggle.innerHTML = '☰';
+                });
+            });
+        }
+        
+        // Smooth scrolling
+        function smoothScroll() {
+            const scrollDown = document.getElementById('scrollDown');
+            const links = document.querySelectorAll('a[href^="#"]');
+            
+            const scroll = (target) => {
+                const element = document.querySelector(target);
+                
+                if (element) {
+                    window.scrollTo({
+                        top: element.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            };
+            
+            scrollDown.addEventListener('click', () => {
+                scroll('#story');
+            });
+            
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute('href');
+                    scroll(target);
+                });
+            });
+        }
+        
+        // Gallery modal
+        function galleryModal() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalClose = document.getElementById('modalClose');
+            
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const imgSrc = item.querySelector('img').src;
+                    const imgAlt = item.querySelector('img').alt;
+                    
+                    modalImage.src = imgSrc;
+                    modalImage.alt = imgAlt;
+                    modal.classList.add('active');
+                });
+            });
+            
+            modalClose.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+            
+            // Close on outside click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+            
+            // Close on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    modal.classList.remove('active');
+                }
+            });
+        }
+        
+        // Initialize all functions
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            animateHeader();
+            navbarScroll();
+            mobileNav();
+            smoothScroll();
+            animateOnScroll();
+            galleryModal();
+        });
+    </script>
+</body>
+</html>
+ <!-- Music Section -->
+<section id="music">
+    <h2>Our Sacred Melodies</h2>
+    <div class="music-player">
+        <p>I LOVE YOU BAE:</p>
+        
+        <!-- Simple Dropdown Menu -->
+        <select id="song-selector" class="simple-dropdown">
+            <option value="https://github.com/your-username/maha-shivaratri-website/raw/main/Ummmmmmmmmmmmmmmaa.mp3">Ummmmmmmmmmmmmmmaa</option>
+            <option value="https://github.com/your-username/maha-shivaratri-website/raw/main/Ummmmmmmmmmmmmmmaaa.mp3">Ummmmmmmmmmmmmmmaaa</option>
+            <option value="https://github.com/your-username/maha-shivaratri-website/raw/main/Ummmmmmmmmmmmmmmaaaa.mp3">Ummmmmmmmmmmmmmmaaaa</option>
+        </select>
+
+        <!-- Simple Audio Player -->
+        <audio id="audio-player" controls class="simple-audio">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</section>
+
+<style>
+    /* Simple Dropdown Menu */
+    .simple-dropdown {
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 2px solid #ffa500;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #f5f0ff;
+        outline: none;
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+
+    .simple-dropdown:hover {
+        border-color: #ff6b6b;
+    }
+
+    .simple-dropdown:focus {
+        border-color: #ff6b6b;
+        box-shadow: 0 0 8px rgba(255, 107, 107, 0.5);
+    }
+
+    /* Simple Audio Player */
+    .simple-audio {
+        width: 100%;
+        outline: none;
+    }
+
+    .simple-audio::-webkit-media-controls-panel {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+    }
+
+    .simple-audio::-webkit-media-controls-play-button,
+    .simple-audio::-webkit-media-controls-mute-button {
+        background-color: #ffa500;
+        border-radius: 50%;
+    }
+</style>
+
+<script>
+    // JavaScript to change songs dynamically
+    const songSelector = document.getElementById('song-selector');
+    const audioPlayer = document.getElementById('audio-player');
+
+    songSelector.addEventListener('change', function() {
+        audioPlayer.src = this.value; // Set the selected song as the audio source
+        audioPlayer.play(); // Auto-play the selected song
+    });
+
+    // Set the default song
+    audioPlayer.src = songSelector.value;
+</script>
+<!-- Shlokas Section -->
+<section id="shlokas">
+    <h2 class="section-title">Sacred Shlokas</h2>
+    <div class="shlokas-container">
+        <div class="shloka-card">
+            <p class="shloka-text">"यत्र नार्यस्तु पूज्यन्ते रमन्ते तत्र देवताः।"</p>
+            <p class="shloka-translation">"Where women are worshipped, there the gods reside."</p>
+        </div>
+        <div class="shloka-card">
+            <p class="shloka-text">"प्रेम स्वर्गस्य मार्गः।"</p>
+            <p class="shloka-translation">"Love is the path to heaven."</p>
+        </div>
+        <div class="shloka-card">
+            <p class="shloka-text">"शिवः शक्त्या युक्तो यदि भवति शक्तः प्रभवितुम्।"</p>
+            <p class="shloka-translation">"Shiva, when united with Shakti, becomes able to manifest."</p>
+        </div>
+    </div>
+</section>
+<!-- Dedication Section -->
+<section id="dedication">
+    <h2 class="section-title">For My Ammai,For My Parvati, My Everything</h2>
+    <div class="dedication-container">
+        <p class="dedication-text">
+            This website is dedicated to you, my love. Just as Lord Shiva and Goddess Parvati are inseparable, my heart beats only for you.You are my greatest blessing, my wildest dream, my forever. Just as the stars light up the sky, you light up my life. On this sacred night of Maha Shivaratri, I promise to love you, cherish you, and stand by you—always.
+
+            <br><br>
+            Forever your Shiva, Zuzubi♥ <span class="heart">♥</span>
+        </p>
+    </div>
+</section>
+<!-- Countdown Section -->
+<section id="countdown">
+    <h2 class="section-title">Our Special Day Countdown</h2>
+    <div class="countdown-container">
+        <div class="countdown-timer">
+            <div class="countdown-item">
+                <span id="days">66</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-item">
+                <span id="hours">12</span>
+                <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-item">
+                <span id="minutes">34</span>
+                <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-item">
+                <span id="seconds">43</span>
+                <span class="countdown-label">Seconds</span>
+            </div>
+        </div>
+    </div>
+</section>
